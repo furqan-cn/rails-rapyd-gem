@@ -9,15 +9,15 @@ Gem::Specification.new do |spec|
   spec.email         = ['furqan@weareavp.com']
 
   spec.summary       = 'Rapyd payment services gem.'
-  spec.homepage      = 'https://github.com/furqan-cn/artwallst-local.git'
+  spec.homepage      = 'https://github.com/furqan-cn/rails-rapyd-gem.git'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.3.0')
 
   spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
 
   spec.metadata['homepage_uri'] = 'https://rubygems.org/gems/rapyd_service'
-  spec.metadata['source_code_uri'] = 'https://github.com/furqan-cn/artwallst-local.git'
-  spec.metadata['changelog_uri'] = 'https://github.com/furqan-cn/artwallst-local.git'
+  spec.metadata['source_code_uri'] = 'https://github.com/furqan-cn/rails-rapyd-gem.git'
+  spec.metadata['changelog_uri'] = 'https://github.com/furqan-cn/rails-rapyd-gem.git'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
