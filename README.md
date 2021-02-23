@@ -1,39 +1,35 @@
 # RapydService
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rapyd_service`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
 ## Installation
 
-Add this line to your application's Gemfile:
+    Add this line to your application's Gemfile:
 
-```ruby
-    gem 'rapyd_service', :git => 'git@github.com:furqan-cn/rails-rapyd-gem.git', branch: :main
-```
+    ```ruby
+        gem 'rapyd_service', :git => 'git@github.com:furqan-cn/rails-rapyd-gem.git', branch: :main
+    ```
 
-And then execute:
+    And then execute:
 
-    $ bundle install
+        $ bundle install
 
 
 ## Description
-Gem provides funtionaities
-1. Payout Process
-2. Beneficaiary creation
-3. Ewallet creation
-4. Documnets verification
+    Gem provides funtionaities
+    1. Payout Process
+    2. Beneficaiary creation
+    3. Documnets verification
+    4. Ewallet creation
 
 
 
 ## Usage
-1. Use in the file by 
-    require 'rapyd_service'
+    1. Use in the file by 
+        require 'rapyd_service'
 
-2. Then initilize the main RAPYD SERVICE object by giving three parameters:
-    RapydService = RapydService::RapydService.new('rapid_api_endpoint','rapid_access_key','rapyd_secret_key')
+    2. Then initilize the main RAPYD SERVICE object by giving three parameters:
+        RapydService = RapydService::RapydService.new('rapid_api_endpoint','rapid_access_key','rapyd_secret_key')
 
-3. Then call method
-    RapydService.payout_method_type_list('US','USD','bank','individual')
+    3. Then call method
+        RapydService.payout_method_type_list('US','USD','bank','individual')
 
-TODO: Write usage instructions here
+    TODO: Write usage instructions here
