@@ -17,6 +17,15 @@ And then execute:
     $ bundle install
 
 
+## Description
+Gem provides funtionaities
+1. Payout Process
+2. Beneficaiary creation
+3. Ewallet creation
+4. Documnets verification
+
+
+
 ## Usage
 1. Use in the file by 
     require 'rapyd_service'
@@ -24,7 +33,7 @@ And then execute:
 2. Then initilize the main RAPYD SERVICE object by giving three parameters:
     RapydService = RapydService::RapydService.new('rapid_api_endpoint','rapid_access_key','rapyd_secret_key')
 
-3. Then call any method
+3. Then call method
     RapydService.payout_method_type_list('US','USD','bank','individual')
 
 TODO: Write usage instructions here

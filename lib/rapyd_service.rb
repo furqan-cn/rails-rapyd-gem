@@ -1,4 +1,9 @@
-# frozen_string_literal: true
+# Module RapydService
+#
+# The module is written for manage all Rapyd payment gateway calls and processing
+#
+# Author:: Furqan Wasi
+# 
 
 require_relative 'rapyd_service/version'
 require_relative 'rapyd_service/rest_client_service'
