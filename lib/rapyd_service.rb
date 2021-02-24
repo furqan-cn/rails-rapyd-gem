@@ -159,7 +159,7 @@ module RapydService
                   'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
       response, msg = rest_client.putCall('/v1/user/disable', body.to_json, headers)
       if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['status']['operation_id'].present?
-        JSON.parse(response.body)['data']
+        JSON.parse(response.body)['status']
       end
     rescue StandardError => e
       nil
