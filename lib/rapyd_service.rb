@@ -251,6 +251,20 @@ module RapydService
       nil
     end
 
+    def delete_wallet_contact(wallet_id,contact_id)
+      add_timestamp
+      add_salt
+      headers = { 'Content-type' => 'application/json', 'signature' => signature('', 'delete', "/v1/ewallets/#{wallet_id}/contacts/#{contact_id}"),
+                  'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
+      response, msg = rest_client.deleteCall("/v1/ewallets/#{wallet_id}/contacts/#{contact_id}",headers)
+      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['status']['operation_id'].present?
+        JSON.parse(response.body)['status']
+      end
+    rescue StandardError => e
+      nil
+    end
+
+
 
 
 
