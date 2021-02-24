@@ -191,6 +191,36 @@ module RapydService
       nil
     end
 
+    def add_contact_to_wallet(body,wallet_id)
+      add_timestamp
+      add_salt
+      headers = { 'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'post', "/v1/ewallets/#{wallet_id}/contacts"),
+                  'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
+      response, msg = rest_client.postCall("/v1/ewallets/#{wallet_id}/contacts", body.to_json, headers)
+      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['data']['id'].present?
+        JSON.parse(response.body)['data']
+      end
+    rescue StandardError => e
+      Rails.logger.error e
+      nil
+    end
+
+    def update_contact_in_wallet(body,wallet_id,contact_id)
+      add_timestamp
+      add_salt
+      headers = { 'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'post', "/v1/ewallets/#{wallet_id}/contacts/#{contact_id}"),
+                  'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
+      response, msg = rest_client.postCall("/v1/ewallets/#{wallet_id}/contacts/#{contact_id}", body.to_json, headers)
+      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['data']['id'].present?
+        JSON.parse(response.body)['data']
+      end
+    rescue StandardError => e
+      Rails.logger.error e
+      nil
+    end
+
+
+
     # Verifying the identity of a personal contact for a Rapyd Wallet by giving country ewalllet_id and contact_id i.e. US, ewallet_db405029bac88de81f3072f31fcf0442, contact_db34235235423423423343dfewf32rdsc
     def identify_contact(country, ewallet, contact)
       body = {
