@@ -158,7 +158,7 @@ module RapydService
       headers = { 'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'put', '/v1/user/disable'),
                   'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
       response, msg = rest_client.putCall('/v1/user/disable', body.to_json, headers)
-      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['data']['operation_id'].present?
+      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['status']['operation_id'].present?
         JSON.parse(response.body)['data']
       end
     rescue StandardError => e
