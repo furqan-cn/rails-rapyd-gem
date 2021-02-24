@@ -46,4 +46,10 @@ class RestClientService
   rescue StandardError => e
     [nil, "Failed to process this request #{end_point + uri} #{e}"]
   end
+
+  def deleteCall(uri, headers)
+    [RestClient.delete(end_point + uri, headers), 'success']
+  rescue StandardError => e
+    [nil, "Failed to process this request #{end_point + uri} #{e}"]
+  end
 end

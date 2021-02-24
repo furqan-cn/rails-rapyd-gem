@@ -165,7 +165,31 @@ module RapydService
       nil
     end
 
+    def enable_wallet(body)
+      add_timestamp
+      add_salt
+      headers = { 'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'put', '/v1/user/enable'),
+                  'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
+      response, msg = rest_client.putCall('/v1/user/enable', body.to_json, headers)
+      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['status']['operation_id'].present?
+        JSON.parse(response.body)['status']
+      end
+    rescue StandardError => e
+      nil
+    end
 
+    def delete_wallet(wallet_id)
+      add_timestamp
+      add_salt
+      headers = { 'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'delete', "/v1/user/#{wallet_id}"),
+                  'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
+      response, msg = rest_client.deleteCall("/v1/user/#{wallet_id}", body.to_json, headers)
+      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['status']['operation_id'].present?
+        JSON.parse(response.body)['status']
+      end
+    rescue StandardError => e
+      nil
+    end
 
     # Verifying the identity of a personal contact for a Rapyd Wallet by giving country ewalllet_id and contact_id i.e. US, ewallet_db405029bac88de81f3072f31fcf0442, contact_db34235235423423423343dfewf32rdsc
     def identify_contact(country, ewallet, contact)
