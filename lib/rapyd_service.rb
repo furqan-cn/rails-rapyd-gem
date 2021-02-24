@@ -162,7 +162,6 @@ module RapydService
         JSON.parse(response.body)['data']
       end
     rescue StandardError => e
-      Rails.logger.error e
       nil
     end
 
