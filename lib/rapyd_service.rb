@@ -116,6 +116,7 @@ module RapydService
       end
     rescue StandardError => e
       Rails.logger.error e
+      puts e
       nil
     end
 
