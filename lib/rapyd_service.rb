@@ -181,9 +181,9 @@ module RapydService
     def delete_wallet(wallet_id)
       add_timestamp
       add_salt
-      headers = { 'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'delete', "/v1/user/#{wallet_id}"),
+      headers = { 'Content-type' => 'application/json', 'signature' => signature('', 'delete', "/v1/user/#{wallet_id}"),
                   'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
-      response, msg = rest_client.deleteCall("/v1/user/#{wallet_id}", body.to_json, headers)
+      response, msg = rest_client.deleteCall("/v1/user/#{wallet_id}",headers)
       if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['status']['operation_id'].present?
         JSON.parse(response.body)['status']
       end
