@@ -28,9 +28,9 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   spec.add_dependency 'bundler'
-  spec.add_dependency 'rake', '~> 13.0.3'
+  spec.add_dependency 'rake'
   spec.add_dependency 'rest-client'
-  spec.add_dependency 'rspec', '~> 3.4.0'
+  spec.add_dependency 'rspec'
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/services/rest_client_service.rb
 # app/services/rest_client_service.rb
 #
@@ -24,6 +26,12 @@ class RestClientService
   # @return [String]
   def postCall(uri, body, headers)
     [RestClient.post(end_point + uri, body, headers), 'success']
+  rescue StandardError => e
+    [nil, "Failed to process this request #{end_point + uri}  #{e}"]
+  end
+
+  def putCall(uri, body, headers)
+    [RestClient.put(end_point + uri, body, headers), 'success']
   rescue StandardError => e
     [nil, "Failed to process this request #{end_point + uri}  #{e}"]
   end

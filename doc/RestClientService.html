@@ -153,7 +153,7 @@ href="RestClientService.html#attribute-i-end_point">#end_point</a> @return
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service/rest_client_service.rb, line 15</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service/rest_client_service.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">end_point</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">end_point</span> = <span class="ruby-identifier">end_point</span>
 <span class="ruby-keyword">end</span></pre>
@@ -196,7 +196,7 @@ href="RestClientService.html#attribute-i-end_point">#end_point</a> @return
 
           
           <div class="method-source-code" id="getCall-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service/rest_client_service.rb, line 36</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service/rest_client_service.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">getCall</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">headers</span>)
   [<span class="ruby-constant">RestClient</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">end_point</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">headers</span>), <span class="ruby-string">&#39;success&#39;</span>]
 <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
@@ -234,7 +234,7 @@ href="RestClientService.html#attribute-i-end_point">#end_point</a> @return
 
           
           <div class="method-source-code" id="postCall-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service/rest_client_service.rb, line 25</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service/rest_client_service.rb, line 26</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">postCall</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">body</span>, <span class="ruby-identifier">headers</span>)
   [<span class="ruby-constant">RestClient</span>.<span class="ruby-identifier">post</span>(<span class="ruby-identifier">end_point</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">body</span>, <span class="ruby-identifier">headers</span>), <span class="ruby-string">&#39;success&#39;</span>]
 <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>

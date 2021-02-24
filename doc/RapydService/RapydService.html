@@ -73,10 +73,6 @@
     
     <li ><a href="#method-c-new">::new</a>
     
-    <li ><a href="#method-i-add_salt">#add_salt</a>
-    
-    <li ><a href="#method-i-add_timestamp">#add_timestamp</a>
-    
     <li ><a href="#method-i-additional_fields">#additional_fields</a>
     
     <li ><a href="#method-i-create_artist_payout_to_bank">#create_artist_payout_to_bank</a>
@@ -96,8 +92,6 @@
     <li ><a href="#method-i-payout_method_type_list">#payout_method_type_list</a>
     
     <li ><a href="#method-i-payout_sender">#payout_sender</a>
-    
-    <li ><a href="#method-i-signature">#signature</a>
     
     <li ><a href="#method-i-wallet_information">#wallet_information</a>
     
@@ -234,13 +228,17 @@
 
         <div class="method-description">
           
-          
+          <p>Initilize the Service by giving Sandbox or Production credientials i.e:</p>
+
+<pre>rapid_api_endpoint: &quot;https://sandboxapi.rapyd.net&quot;  
+rapid_access_key: &quot;sdqbdb34k3jb432h4vjh32v4j2h3v4&quot;
+rapyd_secret_key: &quot;dew123123qbdb34k3jb432h4vjh32v4j2h3v4&quot;</pre>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 15</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">rapid_api_endpoint</span>, <span class="ruby-identifier">rapid_access_key</span>, <span class="ruby-identifier">rapyd_secret_key</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">rapid_api_endpoint</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">rapid_access_key</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">rapyd_secret_key</span>.<span class="ruby-identifier">present?</span>
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">base_url</span> = <span class="ruby-identifier">rapid_api_endpoint</span>
@@ -269,77 +267,6 @@
        </header>
 
     
-      <div id="method-i-add_salt" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">add_salt</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p><a href="RapydService.html#method-i-add_salt">#add_salt</a></p>
-
-<p>@return [String]</p>
-          
-          
-
-          
-          <div class="method-source-code" id="add_salt-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 36</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_salt</span>
-  <span class="ruby-identifier">o</span> = [(<span class="ruby-string">&#39;a&#39;</span><span class="ruby-operator">..</span><span class="ruby-string">&#39;z&#39;</span>)].<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:to_a</span>).<span class="ruby-identifier">flatten</span>
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">salt</span> = (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-value">8</span>).<span class="ruby-identifier">map</span> { <span class="ruby-identifier">o</span>[<span class="ruby-identifier">rand</span>(<span class="ruby-identifier">o</span>.<span class="ruby-identifier">length</span>)] }.<span class="ruby-identifier">join</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-add_timestamp" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">add_timestamp</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p><a href="RapydService.html#method-i-add_timestamp">#add_timestamp</a></p>
-
-<p>@return [String]</p>
-          
-          
-
-          
-          <div class="method-source-code" id="add_timestamp-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 29</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_timestamp</span>
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">timestamp</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_i</span>.<span class="ruby-identifier">to_s</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
       <div id="method-i-additional_fields" class="method-detail ">
         
         <div class="method-heading">
@@ -353,18 +280,24 @@
 
         <div class="method-description">
           
-          
+          <p>You can additional fields while selecting the payout method type such as
+payout_method_type, beneficiary_country, beneficiary_entity_type, amount,
+payout_currency, sender_country, sender_currency, sender_entity_type i.e
+bank,US,individual,35000,usd,usd,individual</p>
           
           
 
           
           <div class="method-source-code" id="additional_fields-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 208</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 307</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">additional_fields</span>(<span class="ruby-identifier">payout_method_type</span>, <span class="ruby-identifier">beneficiary_country</span>, <span class="ruby-identifier">beneficiary_entity_type</span>, <span class="ruby-identifier">amount</span>, <span class="ruby-identifier">payout_currency</span>, <span class="ruby-identifier">sender_country</span>, <span class="ruby-identifier">sender_currency</span>, <span class="ruby-identifier">sender_entity_type</span>)
   <span class="ruby-identifier">add_timestamp</span>
   <span class="ruby-identifier">add_salt</span>
-  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;get&#39;</span>, <span class="ruby-node">&quot;/v1/payouts/#{payout_method_type}/details?beneficiary_country=#{beneficiary_country}&amp;beneficiary_entity_type=#{beneficiary_entity_type}&amp;amount=#{amount}&amp;payout_currency=#{payout_currency}&amp;sender_country=#{sender_country}&amp;sender_currency=#{sender_currency}&amp;sender_entity_type=#{sender_entity_type}&quot;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
-  <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">getCall</span>(<span class="ruby-node">&quot;/v1/payouts/#{payout_method_type}/details?beneficiary_country=#{beneficiary_country}&amp;beneficiary_entity_type=#{beneficiary_entity_type}&amp;amount=#{amount}&amp;payout_currency=#{payout_currency}&amp;sender_country=#{sender_country}&amp;sender_currency=#{sender_currency}&amp;sender_entity_type=#{sender_entity_type}&quot;</span>, <span class="ruby-identifier">headers</span>)
+  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>,
+              <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;get&#39;</span>, <span class="ruby-node">&quot;/v1/payouts/#{payout_method_type}/details?beneficiary_country=#{beneficiary_country}&amp;beneficiary_entity_type=#{beneficiary_entity_type}&amp;amount=#{amount}&amp;payout_currency=#{payout_currency}&amp;sender_country=#{sender_country}&amp;sender_currency=#{sender_currency}&amp;sender_entity_type=#{sender_entity_type}&quot;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
+  <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">getCall</span>(
+    <span class="ruby-node">&quot;/v1/payouts/#{payout_method_type}/details?beneficiary_country=#{beneficiary_country}&amp;beneficiary_entity_type=#{beneficiary_entity_type}&amp;amount=#{amount}&amp;payout_currency=#{payout_currency}&amp;sender_country=#{sender_country}&amp;sender_currency=#{sender_currency}&amp;sender_entity_type=#{sender_entity_type}&quot;</span>, <span class="ruby-identifier">headers</span>
+  )
   <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>)[<span class="ruby-string">&#39;data&#39;</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">present?</span>
 <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
   <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span> <span class="ruby-identifier">e</span>
@@ -393,17 +326,67 @@
 
         <div class="method-description">
           
-          
+          <p>You can create a payout by giving body params i.e {</p>
+
+<pre>&quot;beneficiary&quot;: {
+    &quot;name&quot;: &quot;Jane Doe&quot;,
+    &quot;address&quot;: &quot;456 Second Street&quot;,
+    &quot;email&quot;: &quot;janedoe@rapyd.net&quot;,
+    &quot;country&quot;: &quot;US&quot;,
+    &quot;city&quot;: &quot;Anytown&quot;,
+    &quot;postcode&quot;: &quot;10101&quot;,
+    &quot;account_number&quot;: &quot;BG96611020345678&quot;,
+    &quot;bank_name&quot;: &quot;US General Bank&quot;,
+    &quot;state&quot;: &quot;NY&quot;,
+    &quot;identification_type&quot;: &quot;SSC&quot;,
+    &quot;identification_value&quot;: &quot;123456789&quot;,
+    &quot;bic_swift&quot;: &quot;BUINBGSF&quot;,
+    &quot;ach_code&quot;: &quot;123456789&quot;
+},
+&quot;beneficiary_country&quot;: &quot;US&quot;,
+&quot;beneficiary_entity_type&quot;: &quot;individual&quot;,
+&quot;description&quot;: &quot;Payout - Bank Transfer: Beneficiary/Sender objects&quot;,
+&quot;merchant_reference_id&quot;: &quot;GHY-0YU-HUJ-POI&quot;,
+&quot;ewallet&quot;: &quot;ewallet_4f1757749b8858160274e6db49f78ff3&quot;,
+&quot;payout_amount&quot;: &quot;110&quot;,
+&quot;payout_currency&quot;: &quot;USD&quot;,
+&quot;payout_method_type&quot;: &quot;us_general_bank&quot;,
+&quot;sender&quot;: {
+    &quot;name&quot;: &quot;John Doe&quot;,
+    &quot;address&quot;: &quot;123 First Street&quot;,
+    &quot;city&quot;: &quot;Anytown&quot;,
+    &quot;state&quot;: &quot;NY&quot;,
+    &quot;date_of_birth&quot;: &quot;22/02/1980&quot;,
+    &quot;postcode&quot;: &quot;12345&quot;,
+    &quot;phonenumber&quot;: &quot;621212938122&quot;,
+    &quot;remitter_account_type&quot;: &quot;Individual&quot;,
+    &quot;source_of_income&quot;: &quot;salary&quot;,
+    &quot;identification_type&quot;: &quot;License No&quot;,
+    &quot;identification_value&quot;: &quot;123456789&quot;,
+    &quot;purpose_code&quot;: &quot;ABCDEFGHI&quot;,
+    &quot;account_number&quot;: &quot;123456789&quot;,
+    &quot;beneficiary_relationship&quot;: &quot;client&quot;
+},
+&quot;sender_country&quot;: &quot;US&quot;,
+&quot;sender_currency&quot;: &quot;USD&quot;,
+&quot;sender_entity_type&quot;: &quot;individual&quot;,
+&quot;statement_descriptor&quot;:&quot;GHY* Limited Access 800-123-4567&quot;,
+&quot;metadata&quot;: {
+    &quot;merchant_defined&quot;: true
+}</pre>
+
+<p>}</p>
           
           
 
           
           <div class="method-source-code" id="create_artist_payout_to_bank-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 162</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 251</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_artist_payout_to_bank</span>(<span class="ruby-identifier">body</span>)
   <span class="ruby-identifier">add_timestamp</span>
   <span class="ruby-identifier">add_salt</span>
-  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;Content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_json</span>, <span class="ruby-string">&#39;post&#39;</span>, <span class="ruby-string">&#39;/v1/payouts&#39;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
+  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;Content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_json</span>, <span class="ruby-string">&#39;post&#39;</span>, <span class="ruby-string">&#39;/v1/payouts&#39;</span>),
+              <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
   <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">postCall</span>(<span class="ruby-string">&#39;/v1/payouts&#39;</span>,  <span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_json</span>, <span class="ruby-identifier">headers</span>)
   <span class="ruby-keyword">if</span> (<span class="ruby-identifier">response</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">String</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;status&#39;</span>][<span class="ruby-string">&#39;status&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;SUCCESS&#39;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;data&#39;</span>][<span class="ruby-string">&#39;id&#39;</span>].<span class="ruby-identifier">present?</span>
     <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;data&#39;</span>]
@@ -435,17 +418,38 @@
 
         <div class="method-description">
           
-          
+          <p>You can create a payout by giving the required body params i.e</p>
+
+<pre>{
+   &quot;category&quot;: &quot;bank&quot;,
+   &quot;default_payout_method_type&quot;: &quot;us_visa_card&quot;,
+   &quot;country&quot;: &quot;US&quot;,
+   &quot;currency&quot;: &quot;USD&quot;,
+   &quot;entity_type&quot;: &quot;individual&quot;,
+   &quot;first_name&quot;: &quot;John&quot;,
+   &quot;identification_type&quot;: &quot;work permit&quot;,
+   &quot;identification_value&quot;: &quot;6658412&quot;,
+   &quot;last_name&quot;: &quot;Doe&quot;,
+   &quot;payment_type&quot;: &quot;regular&quot;,
+   &quot;address&quot;: &quot;123 Main Street&quot;,
+   &quot;city&quot;: &quot;NY&quot;,
+   &quot;postcode&quot;: &quot;12345&quot;,
+   &quot;account_number&quot;: &quot;1234567890&quot;,
+   &quot;merchant_reference_id&quot;: &quot;JohnDoeOffice&quot;,
+   &quot;bsb_code&quot;: &quot;154126&quot;</pre>
+
+<p>}</p>
           
           
 
           
           <div class="method-source-code" id="create_payout_beneficiary-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 147</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 186</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_payout_beneficiary</span>(<span class="ruby-identifier">body</span>)
   <span class="ruby-identifier">add_timestamp</span>
   <span class="ruby-identifier">add_salt</span>
-  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;Content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_json</span>, <span class="ruby-string">&#39;post&#39;</span>, <span class="ruby-string">&#39;/v1/payouts/beneficiary&#39;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
+  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;Content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>,
+              <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_json</span>, <span class="ruby-string">&#39;post&#39;</span>, <span class="ruby-string">&#39;/v1/payouts/beneficiary&#39;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
   <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">postCall</span>(<span class="ruby-string">&#39;/v1/payouts/beneficiary&#39;</span>, <span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_json</span>, <span class="ruby-identifier">headers</span>)
   <span class="ruby-keyword">if</span> (<span class="ruby-identifier">response</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">String</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;status&#39;</span>][<span class="ruby-string">&#39;status&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;SUCCESS&#39;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;data&#39;</span>][<span class="ruby-string">&#39;id&#39;</span>].<span class="ruby-identifier">present?</span>
     <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;data&#39;</span>]
@@ -479,17 +483,35 @@
 
         <div class="method-description">
           
-          
+          <p>You can create a payout sender by giving the required body params i.e  {</p>
+
+<pre>&quot;currency&quot;: &quot;PHP&quot;,
+&quot;country&quot;: &quot;PH&quot;,
+&quot;entity_type&quot;: &quot;individual&quot;,
+&quot;first_name&quot;: &quot;John&quot;,
+&quot;last_name&quot;: &quot;Doe&quot;,
+&quot;identification_type&quot;: &quot;work permit&quot;,
+&quot;identification_value&quot;: &quot;6584133&quot;,</pre>
+
+<p>// Fields from &#39;sender_required_fields&#39; in the response to &#39;Get
+Payout Method Type Required Fields&#39;</p>
+
+<pre>&quot;phone_number&quot;: &quot;621212938122&quot;,
+&quot;date_of_birth&quot;: &quot;12/12/1980&quot;,
+&quot;address&quot;: &quot;123 Main Street&quot;,</pre>
+
+<p>}</p>
           
           
 
           
           <div class="method-source-code" id="create_payout_sender-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 134</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 153</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_payout_sender</span>(<span class="ruby-identifier">body</span>)
   <span class="ruby-identifier">add_timestamp</span>
   <span class="ruby-identifier">add_salt</span>
-  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;Content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_json</span>, <span class="ruby-string">&#39;post&#39;</span>, <span class="ruby-string">&#39;/v1/payouts/sender&#39;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
+  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;Content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>,
+              <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_json</span>, <span class="ruby-string">&#39;post&#39;</span>, <span class="ruby-string">&#39;/v1/payouts/sender&#39;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
   <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">postCall</span>(<span class="ruby-string">&#39;/v1/payouts/sender&#39;</span>, <span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_json</span>, <span class="ruby-identifier">headers</span>)
   <span class="ruby-keyword">if</span> (<span class="ruby-identifier">response</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">String</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;status&#39;</span>][<span class="ruby-string">&#39;status&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;SUCCESS&#39;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;data&#39;</span>][<span class="ruby-string">&#39;id&#39;</span>].<span class="ruby-identifier">present?</span>
     <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;data&#39;</span>]
@@ -521,17 +543,45 @@
 
         <div class="method-description">
           
-          
+          <p>Search For existing wallet with wallet_id i.e.  {</p>
+
+<pre>&quot;first_name&quot;: &quot;John&quot;,
+&quot;last_name&quot;: &quot;Doe&quot;,
+&quot;ewallet_reference_id&quot;: &quot;e-7765&quot;,
+&quot;type&quot;: &quot;person&quot;,
+&quot;contact&quot;: {
+    &quot;phone_number&quot;: &quot;+14155551234&quot;,
+    &quot;email&quot;: &quot;johndoe@rapyd.net&quot;,
+    &quot;first_name&quot;: &quot;John&quot;,
+    &quot;last_name&quot;: &quot;Doe&quot;,
+    &quot;contact_type&quot;: &quot;personal&quot;,
+    &quot;address&quot;: {
+        &quot;name&quot;: &quot;John Doe&quot;,
+        &quot;line_1&quot;: &quot;123 Main Street&quot;,
+        &quot;city&quot;: &quot;Anytown&quot;,
+        &quot;state&quot;: &quot;NY&quot;,
+        &quot;country&quot;: &quot;US&quot;,
+        &quot;zip&quot;: &quot;12345&quot;,
+        &quot;phone_number&quot;: &quot;+14155551234&quot;
+    },
+    &quot;identification_type&quot;: &quot;PA&quot;,
+    &quot;identification_number&quot;: &quot;1234567890&quot;,
+    &quot;date_of_birth&quot;: &quot;11/22/2000&quot;,
+    &quot;country&quot;: &quot;US&quot;
+}</pre>
+
+<p>}</p>
           
           
 
           
           <div class="method-source-code" id="create_wallet_with_contact-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 92</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 93</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_wallet_with_contact</span>(<span class="ruby-identifier">body</span>)
   <span class="ruby-identifier">add_timestamp</span>
   <span class="ruby-identifier">add_salt</span>
-  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;Content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_json</span>, <span class="ruby-string">&#39;post&#39;</span>, <span class="ruby-string">&#39;/v1/user&#39;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
+  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;Content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_json</span>, <span class="ruby-string">&#39;post&#39;</span>, <span class="ruby-string">&#39;/v1/user&#39;</span>),
+              <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
   <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">postCall</span>(<span class="ruby-string">&#39;/v1/user&#39;</span>, <span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_json</span>, <span class="ruby-identifier">headers</span>)
   <span class="ruby-keyword">if</span> (<span class="ruby-identifier">response</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;status&#39;</span>][<span class="ruby-string">&#39;status&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;SUCCESS&#39;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;data&#39;</span>][<span class="ruby-string">&#39;id&#39;</span>].<span class="ruby-identifier">present?</span>
     <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;data&#39;</span>]
@@ -563,20 +613,22 @@
 
         <div class="method-description">
           
-          
+          <p>Get the identification documents information with country e.g US</p>
           
           
 
           
           <div class="method-source-code" id="identification_type_information-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 61</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 35</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">identification_type_information</span>(<span class="ruby-identifier">country</span>)
   <span class="ruby-identifier">add_timestamp</span>
   <span class="ruby-identifier">add_salt</span>
   <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;get&#39;</span>, <span class="ruby-node">&quot;/v1/identities/types?country=#{country}&quot;</span>),
               <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
   <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">getCall</span>(<span class="ruby-node">&quot;/v1/identities/types?country=#{country}&quot;</span>, <span class="ruby-identifier">headers</span>)
-  <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;status&#39;</span>][<span class="ruby-string">&#39;status&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;SUCCESS&#39;</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;status&#39;</span>][<span class="ruby-string">&#39;status&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;SUCCESS&#39;</span>
+    <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
   <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span> <span class="ruby-identifier">e</span>
   <span class="ruby-keyword">nil</span>
@@ -604,13 +656,16 @@
 
         <div class="method-description">
           
-          
+          <p>Verifying the identity of a personal contact for a Rapyd Wallet by giving
+country ewalllet_id and contact_id i.e. US,
+ewallet_db405029bac88de81f3072f31fcf0442,
+contact_db34235235423423423343dfewf32rdsc</p>
           
           
 
           
           <div class="method-source-code" id="identify_contact-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 105</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 108</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">identify_contact</span>(<span class="ruby-identifier">country</span>, <span class="ruby-identifier">ewallet</span>, <span class="ruby-identifier">contact</span>)
   <span class="ruby-identifier">body</span> = {
     <span class="ruby-string">&#39;country&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">country</span>,
@@ -621,7 +676,8 @@
 
   <span class="ruby-identifier">add_timestamp</span>
   <span class="ruby-identifier">add_salt</span>
-  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;Content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-identifier">body</span>, <span class="ruby-string">&#39;post&#39;</span>, <span class="ruby-string">&#39;/v1/hosted/idv&#39;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
+  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;Content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-identifier">body</span>, <span class="ruby-string">&#39;post&#39;</span>, <span class="ruby-string">&#39;/v1/hosted/idv&#39;</span>),
+              <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
   <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">postCall</span>(<span class="ruby-string">&#39;/v1/hosted/idv&#39;</span>, <span class="ruby-identifier">body</span>, <span class="ruby-identifier">headers</span>)
   <span class="ruby-keyword">if</span> (<span class="ruby-identifier">response</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">String</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;status&#39;</span>][<span class="ruby-string">&#39;status&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;SUCCESS&#39;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;data&#39;</span>][<span class="ruby-string">&#39;id&#39;</span>].<span class="ruby-identifier">present?</span>
     <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
@@ -650,17 +706,19 @@
 
         <div class="method-description">
           
-          
+          <p>Use the GET method to retrieve details of a payout beneficiary by giving
+beneficiary i.e beneficiary_2c0aca540aca5d2f7700270b201b2157</p>
           
           
 
           
           <div class="method-source-code" id="payout_beneficiary-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 186</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 279</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">payout_beneficiary</span>(<span class="ruby-identifier">beneficiary</span>)
   <span class="ruby-identifier">add_timestamp</span>
   <span class="ruby-identifier">add_salt</span>
-  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;get&#39;</span>, <span class="ruby-node">&quot;/v1/payouts/beneficiary/#{beneficiary}&quot;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
+  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>,
+              <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;get&#39;</span>, <span class="ruby-node">&quot;/v1/payouts/beneficiary/#{beneficiary}&quot;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
   <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">getCall</span>(<span class="ruby-node">&quot;/v1/payouts/beneficiary/#{beneficiary}&quot;</span>, <span class="ruby-identifier">headers</span>)
   <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>)[<span class="ruby-string">&#39;data&#39;</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">present?</span>
 <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
@@ -690,18 +748,23 @@
 
         <div class="method-description">
           
-          
+          <p>List of all available payout method types for bank transfers by giving
+beneficiary_country, payout_currency, category, sender_entity i.e
+US,usd,bank,individual</p>
           
           
 
           
           <div class="method-source-code" id="payout_method_type_list-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 197</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 292</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">payout_method_type_list</span>(<span class="ruby-identifier">beneficiary_country</span>, <span class="ruby-identifier">payout_currency</span>, <span class="ruby-identifier">category</span>, <span class="ruby-identifier">sender_entity</span>)
   <span class="ruby-identifier">add_timestamp</span>
   <span class="ruby-identifier">add_salt</span>
-  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;get&#39;</span>, <span class="ruby-node">&quot;/v1/payouts/supported_types?beneficiary_country=#{beneficiary_country}&amp;payout_currency=#{payout_currency}&amp;category=#{category}&amp;sender_entity=#{sender_entity}&quot;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
-  <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">getCall</span>(<span class="ruby-node">&quot;/v1/payouts/supported_types?beneficiary_country=#{beneficiary_country}&amp;payout_currency=#{payout_currency}&amp;category=#{category}&amp;sender_entity=#{sender_entity}&quot;</span>, <span class="ruby-identifier">headers</span>)
+  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>,
+              <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;get&#39;</span>, <span class="ruby-node">&quot;/v1/payouts/supported_types?beneficiary_country=#{beneficiary_country}&amp;payout_currency=#{payout_currency}&amp;category=#{category}&amp;sender_entity=#{sender_entity}&quot;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
+  <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">getCall</span>(
+    <span class="ruby-node">&quot;/v1/payouts/supported_types?beneficiary_country=#{beneficiary_country}&amp;payout_currency=#{payout_currency}&amp;category=#{category}&amp;sender_entity=#{sender_entity}&quot;</span>, <span class="ruby-identifier">headers</span>
+  )
   <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>)[<span class="ruby-string">&#39;data&#39;</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">present?</span>
 <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
   <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span> <span class="ruby-identifier">e</span>
@@ -730,65 +793,21 @@
 
         <div class="method-description">
           
-          
+          <p>You can create a payout sender by giving the sender id  i.e
+sender_efa35c7f32b39aa30f6bccfba640fcd0</p>
           
           
 
           
           <div class="method-source-code" id="payout_sender-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 175</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 266</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">payout_sender</span>(<span class="ruby-identifier">sender</span>)
   <span class="ruby-identifier">add_timestamp</span>
   <span class="ruby-identifier">add_salt</span>
-  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;get&#39;</span>, <span class="ruby-node">&quot;/v1/payouts/sender/#{sender}&quot;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
+  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>,
+              <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;get&#39;</span>, <span class="ruby-node">&quot;/v1/payouts/sender/#{sender}&quot;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
   <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">getCall</span>(<span class="ruby-node">&quot;/v1/payouts/sender/#{sender}&quot;</span>, <span class="ruby-identifier">headers</span>)
   <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>)[<span class="ruby-string">&#39;data&#39;</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">present?</span>
-<span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
-  <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span> <span class="ruby-identifier">e</span>
-  <span class="ruby-keyword">nil</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-signature" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">signature</span><span
-            class="method-args">(body, http_method, uri)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Rapay signature generator</p>
-
-<p>@param [Object]  body @param [Object]  http_method @param [Object]  uri
-@return [Object]</p>
-          
-          
-
-          
-          <div class="method-source-code" id="signature-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 47</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">signature</span>(<span class="ruby-identifier">body</span>, <span class="ruby-identifier">http_method</span>, <span class="ruby-identifier">uri</span>)
-  <span class="ruby-identifier">to_sign</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">body</span>.<span class="ruby-identifier">present?</span>
-              <span class="ruby-node">&quot;#{http_method}#{uri}#{salt}#{timestamp}#{access_key}#{secret_key}#{body}&quot;</span>
-            <span class="ruby-keyword">else</span>
-              <span class="ruby-node">&quot;#{http_method}#{uri}#{salt}#{timestamp}#{access_key}#{secret_key}&quot;</span>
-            <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">mac</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">HMAC</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-string">&#39;SHA256&#39;</span>, <span class="ruby-identifier">secret_key</span>, <span class="ruby-identifier">to_sign</span>)
-  <span class="ruby-identifier">tempBS64</span> = <span class="ruby-constant">Base64</span>.<span class="ruby-identifier">urlsafe_encode64</span>(<span class="ruby-identifier">mac</span>)
-  <span class="ruby-identifier">tempBS64</span>
 <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
   <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span> <span class="ruby-identifier">e</span>
   <span class="ruby-keyword">nil</span>
@@ -818,18 +837,17 @@
           
           <p>Search For existing wallet with wallet_id i.e.
 ewallet_db405029bac88de81f3072f31fcf0442</p>
-
-<p>@param [Object]  wallet_id @return [Object]</p>
           
           
 
           
           <div class="method-source-code" id="wallet_information-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 77</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 50</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">wallet_information</span>(<span class="ruby-identifier">wallet_id</span>)
   <span class="ruby-identifier">add_timestamp</span>
   <span class="ruby-identifier">add_salt</span>
-  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;get&#39;</span>, <span class="ruby-node">&quot;/v1/user/#{wallet_id}&quot;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
+  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;get&#39;</span>, <span class="ruby-node">&quot;/v1/user/#{wallet_id}&quot;</span>),
+              <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
   <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">getCall</span>(<span class="ruby-node">&quot;/v1/user/#{wallet_id}&quot;</span>, <span class="ruby-identifier">headers</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)[<span class="ruby-string">&#39;status&#39;</span>][<span class="ruby-string">&#39;status&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;SUCCESS&#39;</span>
     <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
@@ -863,18 +881,19 @@ ewallet_db405029bac88de81f3072f31fcf0442</p>
 
         <div class="method-description">
           
-          <p>List of all transactions for existing wallet_id i.e.
-ewallet_db405029bac88de81f3072f31fcf0442</p>
+          <p>List of all transactions for existing wallet_id and by type i.e.
+ewallet_db405029bac88de81f3072f31fcf0442 , payout_funds_out</p>
           
           
 
           
           <div class="method-source-code" id="wallet_transactions_listing-source">
-            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 123</span>
+            <pre><span class="ruby-comment"># File lib/rapyd_service.rb, line 127</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">wallet_transactions_listing</span>(<span class="ruby-identifier">wallet_id</span>, <span class="ruby-identifier">type</span>)
   <span class="ruby-identifier">add_timestamp</span>
   <span class="ruby-identifier">add_salt</span>
-  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>, <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;get&#39;</span>, <span class="ruby-node">&quot;/v1/user/#{wallet_id}/transactions?type=#{type}&quot;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
+  <span class="ruby-identifier">headers</span> = { <span class="ruby-string">&#39;content-type&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-string">&#39;application/json&#39;</span>,
+              <span class="ruby-string">&#39;signature&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">signature</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;get&#39;</span>, <span class="ruby-node">&quot;/v1/user/#{wallet_id}/transactions?type=#{type}&quot;</span>), <span class="ruby-string">&#39;salt&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">salt</span>, <span class="ruby-string">&#39;timestamp&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">timestamp</span>, <span class="ruby-string">&#39;access_key&#39;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">access_key</span> }
   <span class="ruby-identifier">response</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">rest_client</span>.<span class="ruby-identifier">getCall</span>(<span class="ruby-node">&quot;/v1/user/#{wallet_id}/transactions?type=#{type}&quot;</span>, <span class="ruby-identifier">headers</span>)
   <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>)[<span class="ruby-string">&#39;data&#39;</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">present?</span>
 <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
