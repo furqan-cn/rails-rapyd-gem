@@ -30,7 +30,39 @@ module RapydService
       end
     end
 
-   
+    # add_timestamp
+    #
+    # @return [String]
+    def add_timestamp
+      self.timestamp = Time.now.to_i.to_s
+    end
+
+    # add_salt
+    #
+    # @return [String]
+    def add_salt
+      o = [('a'..'z')].map(&:to_a).flatten
+      self.salt = (0...8).map { o[rand(o.length)] }.join
+    end
+
+    # Rapay signature generator
+    #
+    # @param [Object]  body
+    # @param [Object]  http_method
+    # @param [Object]  uri
+    # @return [Object]
+    def signature(body, http_method, uri)
+      to_sign = if body.present?
+                  "#{http_method}#{uri}#{salt}#{timestamp}#{access_key}#{secret_key}#{body}"
+                else
+                  "#{http_method}#{uri}#{salt}#{timestamp}#{access_key}#{secret_key}"
+                end
+      mac = OpenSSL::HMAC.hexdigest('SHA256', secret_key, to_sign)
+      Base64.urlsafe_encode64(mac)
+    rescue StandardError => e
+      Rails.logger.error e
+      nil
+    end
 
     # Get the identification documents information with country e.g US
     def identification_type_information(country)
@@ -350,39 +382,7 @@ module RapydService
       nil
     end
 
-    private
-      # add_timestamp
-      #
-      # @return [String]
-      def add_timestamp
-        self.timestamp = Time.now.to_i.to_s
-      end
-
-      # add_salt
-      #
-      # @return [String]
-      def add_salt
-        o = [('a'..'z')].map(&:to_a).flatten
-        self.salt = (0...8).map { o[rand(o.length)] }.join
-      end
-
-      # Rapay signature generator
-      #
-      # @param [Object]  body
-      # @param [Object]  http_method
-      # @param [Object]  uri
-      # @return [Object]
-      def signature(body, http_method, uri)
-        to_sign = if body.present?
-                    "#{http_method}#{uri}#{salt}#{timestamp}#{access_key}#{secret_key}#{body}"
-                  else
-                    "#{http_method}#{uri}#{salt}#{timestamp}#{access_key}#{secret_key}"
-                  end
-        mac = OpenSSL::HMAC.hexdigest('SHA256', secret_key, to_sign)
-        Base64.urlsafe_encode64(mac)
-      rescue StandardError => e
-        Rails.logger.error e
-        nil
-      end
+    # private
+      
   end
 end
