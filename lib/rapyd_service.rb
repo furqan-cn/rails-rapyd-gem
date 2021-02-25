@@ -331,7 +331,7 @@ module RapydService
       add_salt
       headers = {'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'post', "/v1/user/#{wallet_id}/account/limits"), 'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key}
       response, msg = rest_client.postCall("/v1/user/#{wallet_id}/account/limits", body.to_json, headers)
-      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['data']['id'].present?
+      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['data'][0]['id'].present?
         JSON.parse(response.body)['data']
       else
         nil
@@ -341,9 +341,66 @@ module RapydService
       nil
     end
 
+    def delete_wallet_account_limit(body,wallet_id)
+      add_timestamp
+      add_salt
+      headers = { 'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'delete', "v1/user/wallet/#{wallet_id}/limits"),
+                  'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
+      response, msg = rest_client.delete("v1/user/wallet/#{wallet_id}/limits",body.to_json,headers)
+      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['data'][0]['id'].present?
+        JSON.parse(response.body)['status']
+      end
+    rescue StandardError => e
+      nil
+    end
 
+    def list_of_wallet_transactions(wallet_id)
+      add_timestamp
+      add_salt
+      headers = { 'content-type' => 'application/json', 'signature' => signature('', 'get', "v1/user/#{wallet_id}/transactions"),
+                  'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
+      response, msg = rest_client.getCall("v1/user/#{wallet_id}/transactions", headers)
+      if response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS'
+        JSON.parse(response.body)
+      else
+        msg
+      end
+    rescue StandardError => e
+      Rails.logger.error e
+      nil
+    end
 
+    def retrieve_wallet_balance(wallet_id)
+      add_timestamp
+      add_salt
+      headers = { 'content-type' => 'application/json', 'signature' => signature('', 'get', "v1/user/#{wallet_id}/accounts"),
+                  'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
+      response, msg = rest_client.getCall("v1/user/#{wallet_id}/accounts", headers)
+      if response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS'
+        JSON.parse(response.body)
+      else
+        msg
+      end
+    rescue StandardError => e
+      Rails.logger.error e
+      nil
+    end
 
+    def details_of_wallet_transaction(wallet_id,transaction_id)
+      add_timestamp
+      add_salt
+      headers = { 'content-type' => 'application/json', 'signature' => signature('', 'get', "v1/user/#{wallet_id}/transactions/#{transaction_id}"),
+                  'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
+      response, msg = rest_client.getCall("v1/user/#{wallet_id}/transactions/#{transaction_id}", headers)
+      if response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS'
+        JSON.parse(response.body)
+      else
+        msg
+      end
+    rescue StandardError => e
+      Rails.logger.error e
+      nil
+    end
 
 
     # Verifying the identity of a personal contact for a Rapyd Wallet by giving country ewalllet_id and contact_id i.e. US, ewallet_db405029bac88de81f3072f31fcf0442, contact_db34235235423423423343dfewf32rdsc
