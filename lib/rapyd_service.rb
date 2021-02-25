@@ -265,6 +265,51 @@ module RapydService
     end
 
 
+    def transfer_with_wallet(body)
+      add_timestamp
+      add_salt
+      headers = {'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'post', '/v1/account/transfer'), 'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key}
+      response, msg = rest_client.postCall('/v1/account/transfer', body.to_json, headers)
+      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['data']['id'].present?
+        JSON.parse(response.body)['data']
+      else
+        nil
+      end
+    rescue StandardError => e
+      Rails.logger.error e
+      nil
+    end
+
+
+    def set_transfer_with_wallet_response(body)
+      add_timestamp
+      add_salt
+      headers = {'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'post', '/v1/account/transfer/response'), 'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key}
+      response, msg = rest_client.postCall('/v1/account/transfer/response', body.to_json, headers)
+      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['data']['id'].present?
+        JSON.parse(response.body)['data']
+      else
+        nil
+      end
+    rescue StandardError => e
+      Rails.logger.error e
+      nil
+    end
+
+    def put_funds_on_hold(body)
+      add_timestamp
+      add_salt
+      headers = {'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'post', '/v1/account/balance/hold'), 'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key}
+      response, msg = rest_client.postCall('/v1/account/balance/hold', body.to_json, headers)
+      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['data']['id'].present?
+        JSON.parse(response.body)['data']
+      else
+        nil
+      end
+    rescue StandardError => e
+      Rails.logger.error e
+      nil
+    end
 
 
 
