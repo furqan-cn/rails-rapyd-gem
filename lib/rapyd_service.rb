@@ -311,6 +311,38 @@ module RapydService
       nil
     end
 
+    def release_funds_on_hold(body)
+      add_timestamp
+      add_salt
+      headers = {'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'post', '/v1/account/balance/release'), 'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key}
+      response, msg = rest_client.postCall('/v1/account/balance/release', body.to_json, headers)
+      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['data']['id'].present?
+        JSON.parse(response.body)['data']
+      else
+        nil
+      end
+    rescue StandardError => e
+      Rails.logger.error e
+      nil
+    end
+
+    def set_wallet_account_limit(body,wallet_id)
+      add_timestamp
+      add_salt
+      headers = {'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'post', "/v1/user/#{wallet_id}/account/limits"), 'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key}
+      response, msg = rest_client.postCall("/v1/user/#{wallet_id}/account/limits", body.to_json, headers)
+      if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['data']['id'].present?
+        JSON.parse(response.body)['data']
+      else
+        nil
+      end
+    rescue StandardError => e
+      Rails.logger.error e
+      nil
+    end
+
+
+
 
 
 
