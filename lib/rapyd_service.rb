@@ -13,6 +13,7 @@ require 'rapyd_service'
 
 module RapydService
   class RapydService
+    require 'rest-client'
     attr_accessor :base_url, :access_key, :secret_key, :rest_client, :timestamp, :salt
 
     # Initilize the Service by giving Sandbox or Production credientials i.e:
@@ -346,7 +347,7 @@ module RapydService
       add_salt
       headers = { 'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'delete', "/v1/user/wallet/#{wallet_id}/limits"),
                   'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
-      response, msg = rest_client.delete("/v1/user/wallet/#{wallet_id}/limits",body.to_json,headers)
+      response, msg = RestClient.delete("/v1/user/wallet/#{wallet_id}/limits",body.to_json,headers)
       if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['data'][0]['id'].present?
         JSON.parse(response.body)['status']
       end
