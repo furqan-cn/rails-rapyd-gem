@@ -344,9 +344,9 @@ module RapydService
     def delete_wallet_account_limit(body,wallet_id)
       add_timestamp
       add_salt
-      headers = { 'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'delete', "v1/user/wallet/#{wallet_id}/limits"),
+      headers = { 'Content-type' => 'application/json', 'signature' => signature(body.to_json, 'delete', "/v1/user/wallet/#{wallet_id}/limits"),
                   'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
-      response, msg = rest_client.delete("v1/user/wallet/#{wallet_id}/limits",body.to_json,headers)
+      response, msg = rest_client.delete("/v1/user/wallet/#{wallet_id}/limits",body.to_json,headers)
       if (response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS') && JSON.parse(response.body)['data'][0]['id'].present?
         JSON.parse(response.body)['status']
       end
@@ -357,9 +357,9 @@ module RapydService
     def list_of_wallet_transactions(wallet_id)
       add_timestamp
       add_salt
-      headers = { 'content-type' => 'application/json', 'signature' => signature('', 'get', "v1/user/#{wallet_id}/transactions"),
+      headers = { 'content-type' => 'application/json', 'signature' => signature('', 'get', "/v1/user/#{wallet_id}/transactions"),
                   'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
-      response, msg = rest_client.getCall("v1/user/#{wallet_id}/transactions", headers)
+      response, msg = rest_client.getCall("/v1/user/#{wallet_id}/transactions", headers)
       if response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS'
         JSON.parse(response.body)
       else
@@ -373,9 +373,9 @@ module RapydService
     def retrieve_wallet_balance(wallet_id)
       add_timestamp
       add_salt
-      headers = { 'content-type' => 'application/json', 'signature' => signature('', 'get', "v1/user/#{wallet_id}/accounts"),
+      headers = { 'content-type' => 'application/json', 'signature' => signature('', 'get', "/v1/user/#{wallet_id}/accounts"),
                   'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
-      response, msg = rest_client.getCall("v1/user/#{wallet_id}/accounts", headers)
+      response, msg = rest_client.getCall("/v1/user/#{wallet_id}/accounts", headers)
       if response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS'
         JSON.parse(response.body)
       else
@@ -389,9 +389,9 @@ module RapydService
     def details_of_wallet_transaction(wallet_id,transaction_id)
       add_timestamp
       add_salt
-      headers = { 'content-type' => 'application/json', 'signature' => signature('', 'get', "v1/user/#{wallet_id}/transactions/#{transaction_id}"),
+      headers = { 'content-type' => 'application/json', 'signature' => signature('', 'get', "/v1/user/#{wallet_id}/transactions/#{transaction_id}"),
                   'salt' => salt, 'timestamp' => timestamp, 'access_key' => access_key }
-      response, msg = rest_client.getCall("v1/user/#{wallet_id}/transactions/#{transaction_id}", headers)
+      response, msg = rest_client.getCall("/v1/user/#{wallet_id}/transactions/#{transaction_id}", headers)
       if response.present? && response.body.present? && JSON.parse(response.body)['status']['status'] == 'SUCCESS'
         JSON.parse(response.body)
       else
