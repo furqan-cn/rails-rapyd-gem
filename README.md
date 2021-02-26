@@ -3,12 +3,10 @@
 ## Installation
 
     Add this line to your application's Gemfile:
-
     gem 'rapyd_service', :git => 'git@github.com:furqan-cn/rails-rapyd-gem.git', branch: :main
 
     And then execute:
-
-        $ bundle install
+    $ bundle install
 
 
 ## Description
